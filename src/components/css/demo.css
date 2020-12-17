@@ -1,0 +1,27 @@
+.dv{
+    /*margin: auto;*/
+    width: 500px;
+    background-color: lightgray;
+    display: flex;
+    height: 500px;
+    justify-content: center;
+}
+/*ul{*/
+/*    list-style: none;*/
+/*    display: inline-block;*/
+/*    margin:0 auto;*/
+/*    !*position: relative;*!*/
+/*}*/
+
+/*li{*/
+/*    margin: auto;*/
+/*    !*position: relative;*!*/
+
+/*}*/
+
+.bt{
+    color: #ff0000;
+    margin: auto;
+    background-color: #61dafb;
+    height: 20px;
+}
