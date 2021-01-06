@@ -1,0 +1,41 @@
+.admin {
+  display: flex;
+  .adminPage {
+    width: 1000px;
+    background-color: whitesmoke;
+    //margin: 0 auto;
+    padding: 20px;
+
+    button {
+    }
+
+  }
+
+  button{
+    background-color: gray;
+    color: white;
+    border-radius: 3px;
+    margin: 0 auto;
+  }
+
+  textarea{
+    min-height: 300px;
+  }
+
+}
+
+.compose{
+  input{
+    width: 300px;
+  }
+}
+
+.finish{
+  display: flex;
+  background-color: red;
+  justify-content: center;
+}
+
+
+
+

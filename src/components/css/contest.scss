@@ -1,0 +1,84 @@
+.contests{
+  width: 800px;
+  margin: 0 200px;
+  background-color: whitesmoke;
+  padding: 20px;
+
+  table th{
+    font-family: Menlo, sans-serif;
+    font-size: 14px;
+    color: white;
+    background-color: black;
+  }
+
+  tr{
+    padding: 1px;
+    margin: 0;
+    line-height: 8px;
+    font-family: Courier, sans-serif;
+    font-size: 14px;
+  }
+
+  td{
+    height: 5px;
+  }
+
+  tr:nth-child(2n+1) td{
+    background-color: beige;
+  }
+
+
+}
+
+.contest-menu{
+
+  width: 700px;
+  margin: 0 0 30px 200px;
+  display: flex;
+
+  input{
+    margin-left: 30px;
+  }
+
+}
+
+.contest{
+  width: 800px;
+  margin: 0 200px;
+  background-color: whitesmoke;
+  padding: 20px;
+
+  table th{
+    font-family: Menlo, sans-serif;
+    font-size: 14px;
+    color: white;
+    background-color: black;
+  }
+
+  tr{
+    padding: 0;
+    line-height: 8px;
+    font-family: Courier, sans-serif;
+    font-size: 14px;
+  }
+
+  tr:nth-child(2n+1) td{
+    background-color: beige;
+  }
+
+}
+
+.standing{
+  width: 800px;
+  margin: 0 200px;
+  background-color: whitesmoke;
+  padding: 20px;
+
+
+  .ant-table-tbody > tr > td{
+    height: 15px;
+    padding: 4px 0 4px 10px;
+    font-size: 12px;
+  }
+
+}

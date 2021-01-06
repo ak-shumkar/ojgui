@@ -1,0 +1,21 @@
+.navbar{
+  width: 80%;
+  height: 70px;
+  background-color: honeydew;
+  margin: 0 auto 40px auto;
+  position: fixed;
+
+  ul{
+    display: flex;
+    list-style: none;
+  }
+  li{
+    margin-right: 30px;
+    color: black;
+  }
+  .authBar{
+    float: right;
+  }
+
+}
+

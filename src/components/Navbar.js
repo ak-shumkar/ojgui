@@ -1,48 +1,59 @@
 import React from 'react';
 import Navbar from 'react-bootstrap/Navbar'
-import './css/navbar.css'
-import { Link } from 'react-router-dom';
+import './css/navbar.scss'
 import { connect } from "react-redux";
+import StyledLink from './Component'
+import UserMenu from "./user/UserMenu";
 
 class NavBar extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            showUserMenu: false,
+        }
+    }
 
     handleLogout = (event) => {
         this.props.logout();
     }
 
+
     render() {
         const login_nav = (
-            <div className="login">
+            <div className="authBar">
                 <ul>
-                    <Link to='/register' className='link'>
-                    <li>Register</li>
-                    </Link>
-                    <Link to='/login' className='link'> <li>Login </li></Link>
+                    <StyledLink to='/register' className='link'>
+                        <li>Register</li>
+                    </StyledLink>
+                    <StyledLink to='/login' className='link'>
+                        <li>Login</li>
+                    </StyledLink>
                 </ul>
             </div>
         );
 
         const logout_nav = (
-            <div className='logout'>
-                <button type='button'> {this.props.username} </button>
-                <button type='button' onClick={event => this.handleLogout(event)}> Logout</button>
+            <div className='authBar'>
+                <UserMenu username={this.props.username}/>
             </div>
         );
         return(
-                <Navbar id='navbar'>
-                    <ul id='menu'>
-                        <Link to='' className='link'><li>Home</li></Link>
-                        <Link to='/problems' className='link'><li> Problems </li></Link>
-                        <li> <Link to='/contests' className='link'> Contests </Link></li>
-                        <li> <Link to='/articles' className='link'>Articles </Link></li>
-                       <Link to='/blogs' className='link'>  <li> Blogs </li></Link>
+                <nav className='navbar'>
+                    <ul>
+                        <StyledLink to='' className='link'><li>Home</li></StyledLink>
+                        <StyledLink to='/problems' className='link'><li> Problems </li></StyledLink>
+                        <StyledLink to='/contests' className='link'><li>  Contests </li> </StyledLink>
+                        <StyledLink to='/articles' className='link'><li> Articles </li></StyledLink>
+                       <StyledLink to='/blogs' className='link'>  <li> Blogs </li></StyledLink>
                     </ul>
 
-                        { this.props.isAuthenticated ? logout_nav : login_nav }
-                </Navbar>
+                    { this.props.isAuthenticated ? logout_nav : login_nav }
+                </nav>
         )
     }
 }
+
 
 
 const mapStateToProps = state => {

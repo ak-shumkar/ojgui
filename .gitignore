@@ -23,6 +23,5 @@ yarn-debug.log*
 yarn-error.log*
 node_modules/
 test.js
-sss.txt
 fonts.txt
 .idea/

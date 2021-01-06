@@ -1,8 +1,8 @@
 import React from "react";
-import './css/register.css'
-import axiosInstance from "../axiosApi";
+import '../css/auth.scss'
 import axios from 'axios'
-
+import {Form, Input} from "antd";
+import Error from "../error/Error";
 
 class Register extends React.Component{
 
@@ -16,15 +16,19 @@ class Register extends React.Component{
           username: '',
           password: '',
           password_confirmation: '',
+          error: null,
           errors : {
               firstname: null,
               lastname: null,
+              username: null,
               email: null,
-              password: null
+              password: null,
+              password_confirmation: null,
           }
       }
 
       this.onChange = this.onChange.bind(this);
+      this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     validate = () => {
@@ -58,20 +62,18 @@ class Register extends React.Component{
         this.setState({errors})
         return valid
     }
-    async handleSubmit(event){
-        event.preventDefault();
+    async handleSubmit(){
         console.log(this.state.errors);
         const errors = this.state.errors;
         if (this.validate()) {
             console.log('Submitting')
             try {
-                    await axiosInstance.post('http://127.0.0.1:8000/api/account/register/', {
-                    firstname: this.state.firstname,
-                    lastname: this.state.lastname,
+                    await axios.post('http://127.0.0.1:8000/api/account/register/', {
+                    first_name: this.state.firstname,
+                    last_name: this.state.lastname,
                     username: this.state.username,
                     email: this.state.email,
                     password: this.state.password,
-                    password_confirmation: this.state.password_confirmation
                 }).then((response) => {
                     localStorage.setItem("refresh_token", response.data.refresh);
                     localStorage.setItem("access_token", response.data.access);
@@ -79,30 +81,26 @@ class Register extends React.Component{
                     console.log(response.data);
 
                 }).catch((error) => {
+                    console.log('error ', error.response.data);
                     const data = error.response.data;
-                    console.log("Register Component : " + data);
-                    errors.username = data.username_error;
+                    errors.username = data.username;
                     errors.email = data.email;
+                    errors.password = data.password;
                     this.setState({errors});
                 });
-                // console(response.data);
-            } catch (error) {
-                console.log(error);
+            } catch (err) {
+                console.log(err);
             }
-            // errors = onRegister(this.state)
         }
     }
 
     onChange(event) {
-        // this.setState({event.target.value})
         this.setState({
             [event.target.name]: event.target.value
         })
         event.preventDefault();
-        // console.log('Change is made')
         let errors = this.state.errors;
         const {name, value} = event.target;
-        // console.log(name, value)
         switch (name){
             case 'name':
                 errors.name = !value ? 'name is required' : null;
@@ -127,17 +125,18 @@ class Register extends React.Component{
         }
 
         this.setState({errors})
-        console.log(this.state.errors);
-        console.log(this.state)
-
     }
 
     render() {
-        return(
-            <div id='main'>
-                <form className='register' onSubmit={(event) => this.handleSubmit(event)} noValidate>
-                        <label htmlFor='name'>Name</label><br/>
-                        <input
+        return (
+            <div className='auth'>
+
+                <Form onFinish={this.handleSubmit}
+                      noValidate
+                      layout='vertical'
+                >
+                        <Form.Item label='Firstname' htmlFor='name'>
+                        <Input
                             type='text'
                             name='firstname'
                             // onInvalid={event => this.onChange(event)}
@@ -145,65 +144,76 @@ class Register extends React.Component{
                             placeholder='Type your name'
                             onChange={this.onChange}
                         />
-                        <div className='error'>{this.state.errors.firstname}</div>
-                        <label htmlFor='lastname'>Lastname</label>
-                        <input
-                            className={this.state.errors.lastname ? 'error': null}
-                            type='text'
-                            name='lastname'
-                            placeholder='Type your lastname'
-                            value={this.state.lastname}
-                            onChange={this.onChange}
-                        />
-                    <div className='error'>{this.state.errors.lastname}</div>
+                        </Form.Item>
 
-                        <label htmlFor='email'>Email</label>
-                        <input
+                    <Error error={this.state.errors.firstname} />
+
+                        <Form.Item label='Lastname' htmlFor='lastname'>
+                            <Input
+                                className={this.state.errors.lastname ? 'error': null}
+                                type='text'
+                                name='lastname'
+                                placeholder='Type your lastname'
+                                value={this.state.lastname}
+                                onChange={this.onChange}
+                            />
+                        </Form.Item>
+
+                        <Error error={this.state.errors.lastname} />
+
+                        <Form.Item label='Email' htmlFor='email'>
+                        <Input
                             type='email'
                             name='email'
                             placeholder='Type your email address'
                             value={this.state.email}
                             onChange={this.onChange}
                         />
-                    <div className='error'>{this.state.errors.email}</div>
+                        </Form.Item>
 
-                        <label htmlFor='username'>Username</label>
-                        <input
+                        <Error error={this.state.errors.email} />
+
+                        <Form.Item label='Username' htmlFor='username'>
+                        <Input
                             type='text'
                             name='username'
                             placeholder='Choose a username'
                             value={this.state.username}
                             onChange={this.onChange}
                         />
-                    <div className='error'>{this.state.errors.username}</div>
+                        </Form.Item>
 
-                        <label htmlFor='password'>Password</label>
-                        <input
+                         <Error error={this.state.errors.username} />
+
+                        <Form.Item label='Password' htmlFor='password'>
+                        <Input
                             type='password'
                             name='password'
                             placeholder='Type password'
                             value={this.state.password}
                             onChange={this.onChange}
                         />
-                    <div className='error'>{this.state.errors.password}</div>
+                        </Form.Item>
 
-                        <label htmlFor='password_confirmation'>Confirm password</label>
-                        <input
+                    <Error error={this.state.errors.password}/>
+
+                        <Form.Item label='Confirm password' htmlFor='password_confirmation'>
+                        <Input
                             type='password'
                             name='password_confirmation'
                             placeholder='Repeat your password'
                             value={this.state.password_confirmation}
                             onChange={this.onChange}
                         />
-                    <div className='error'>{this.state.errors.password_confirmation}</div>
+                        </Form.Item>
 
-                    <button type='submit' className='button'>Register</button>
-                </form>
+                    <Error error={this.state.errors.password_confirmation}/>
+
+                        <button type='submit' className='button'>Register</button>
+                </Form>
             </div>
         )
     }
 }
-
-
 
 export default Register;

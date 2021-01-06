@@ -1,5 +1,5 @@
 import React from "react";
-import axiosInstance from "../axiosApi";
+import axiosInstance from "../utils/axiosAPI";
 // import axios from 'axios'
 
 export class AuthData extends React.Component{

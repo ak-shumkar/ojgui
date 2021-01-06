@@ -1,4 +1,6 @@
 import axios from 'axios'
+
+
 const axiosInstance = axios.create({
     baseURL: 'http://127.0.0.1:8000/api/',
     timeout: 5000,
@@ -10,10 +12,10 @@ const axiosInstance = axios.create({
 });
 axiosInstance.interceptors.response.use(
     response => {
-      if (response.data.refresh){
-          localStorage.setItem('refresh_token', response.data.refresh);
-      }
-      return response
+        if (response.data.refresh){
+            localStorage.setItem('refresh_token', response.data.refresh);
+        }
+        return response
     },
     error => {
         const originalRequest = error.config;
@@ -37,7 +39,8 @@ axiosInstance.interceptors.response.use(
                     console.log(err)
                 });
         }
-        return Promise.reject(error);
+        return error.response;
+        // return Promise.reject(error);
     }
 );
 export default axiosInstance

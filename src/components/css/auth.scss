@@ -1,0 +1,36 @@
+.auth{
+  margin: 0 auto 0 auto;
+  width: 600px;
+  background-color: whitesmoke;
+  padding: 30px;
+
+  form{
+    display: block;
+  }
+  input{
+    width: 300px;
+    font-family: Menlo, sans-serif;
+    border-radius: 3px;
+  }
+
+  button{
+    background-color: slategray;
+    border-radius: 4px;
+    color: white;
+  }
+
+}
+
+.register {
+
+  margin: 0 auto 0 auto;
+  width: 500px;
+  background-color: whitesmoke;
+  padding: 30px;
+
+  input{
+    border-width: 1px;
+  }
+
+
+}

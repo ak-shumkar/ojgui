@@ -1,17 +1,20 @@
 import React from "react";
-import './css/demo.css'
+import { DatePicker, Space } from 'antd';
 
+export default function Demo() {
 
-class Demo extends React.Component {
-    render() {
-        return(
-            <div>
-                <button>Login</button>
-                {/*<button>Registration</button>*/}
-
-            </div>
-        )
+    function onChange(value, dateString) {
+        console.log('Selected Time: ', value);
+        console.log('Formatted Selected Time: ', dateString);
     }
-}
 
-export default Demo;
+    function onOk(value) {
+        console.log('onOk: ', value);
+    }
+
+    return(
+        <Space direction="vertical" size={12}>
+            <DatePicker showTime onChange={onChange} onOk={onOk}/>
+        </Space>
+    )
+}

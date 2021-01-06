@@ -12,7 +12,6 @@ const store = createStore(userReducer)
 ReactDOM.render(
   <Provider store={store}>
     <App>
-        I am children
     </App>
   </Provider>,
   document.getElementById('root')
