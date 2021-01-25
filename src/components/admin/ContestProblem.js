@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {useHistory, useLocation} from 'react-router-dom';
+import {useHistory, useParams} from 'react-router-dom';
 import {useSelector} from "react-redux";
 
 import {Button, Form, Input, Select} from 'antd'
@@ -14,7 +14,7 @@ const {Option} = Select
 const {TextArea} = Input
 
 function ContestProblem(){
-    const {cId} = useLocation().state
+    const {contestId} = useParams()
     const {user} = useSelector(state => state)
 
     // new problem data
@@ -35,8 +35,8 @@ function ContestProblem(){
 
     const addProblem = () => {
         const data = {
-            author: user,
-            contest: cId,
+            author: user.id,
+            contest: contestId,
             _id: pid,
             title: title,
             time_limit: tl,
@@ -48,22 +48,26 @@ function ContestProblem(){
         }
 
         axiosInstance.post('admin/contest/problem/', data).then(r => {
-            console.log(r.data);
+            console.log(r);
             if(r.status === 400){
+                console.log(r.data)
                 setError(r.data.detail)
             }else{
                 history.goBack()
             }
 
         }).catch(e => {
-            console.log(e)
+            console.log(e.response.data)
         })
 
     }
 
     const addSample = () => {
+        console.log('Sample added')
         setSamples([...samples,{input: input, output: output} ])
     }
+
+    console.log('samples : ', samples)
 
     return(
         <div className='compose'>
@@ -132,29 +136,27 @@ function ContestProblem(){
                 />
             </Form.Item>
 
-            <Button htmlType='submit' style={{marginTop: '50px'}}>Add</Button>
-
-        </Form>
-            <Form
-                onSubmitCapture={addSample}
-                layout='vertical'
-            >
                 <Form.Item label='Add samples'>
                     <TextArea
-                        style={{minHeight: '200px', width: '350px'}}
+                        style={{minHeight: '200px', width: '400px'}}
                         name='input'
                         onChange={e => setInput(e.target.value)}
                     />
 
                     <TextArea
-                        style={{minHeight: '200px', width: '350px'}}
+                        style={{minHeight: '200px', width: '400px'}}
                         name='output'
                         onChange={e => setOutput(e.target.value)}
                     />
 
+                    <input style={{margin: '0 auto'}} type='button' value='Add sample' onClick={addSample}/>
+
                 </Form.Item>
-                <Button htmlType='submit' style={{marginLeft: '300px'}}>Add sample</Button>
-            </Form>
+
+
+            <Button htmlType='submit' style={{marginTop: '50px'}}>Add</Button>
+
+        </Form>
         </div>
     )
 }

@@ -24,6 +24,8 @@ import ContestMenu from "./components/contest/ContestMenu";
 import Admin from "./components/admin/Admin";
 import Demo from "./components/Demo";
 import ContestEdit from "./components/admin/ContestEdit";
+import AntD from "./components/AntD";
+import AddTest from "./components/admin/AddTest";
 
 class App extends React.Component {
 
@@ -31,6 +33,7 @@ class App extends React.Component {
         return(
             <BrowserRouter>
                     {/*<Demo/>*/}
+                    {/*<AntD/>*/}
                     <NavBar/>
                 {/*<PageContainer/>*/}
                     <Switch>
@@ -46,7 +49,7 @@ class App extends React.Component {
                         {/*<Route exact path="/contests/:cId/submit" component={Submit}/>*/}
                         <Route exact path="/login" component={Login}/>
                         {/*<Route exact path='/admin/:username/contests/edit/:contestId' component={ContestEdit}/>*/}
-
+                        <Route path="/admin/problem/:problemId/add_test" component={AddTest}/>
                         <Route path="/admin/:username" component={Admin}/>
 
                         {/*<Route path='*' component={NotFound}/>*/}

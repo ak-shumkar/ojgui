@@ -3,7 +3,7 @@ import '../css/admin.scss'
 import Button from "@material-ui/core/Button";
 import AdminMenu from "./AdminMenu";
 import ContestProblem from "./ContestProblem";
-import {Switch, Route, useRouteMatch, useParams, useHistory, Link} from 'react-router-dom'
+import {Switch, Route, useRouteMatch, Link} from 'react-router-dom'
 import {Table} from 'antd'
 import ContestCompose from "./ContestCompose";
 import {useSelector} from "react-redux";
@@ -13,13 +13,9 @@ import {RiEditCircleLine} from "react-icons/ri";
 import ContestEdit from "./ContestEdit";
 import ContestDetail from "./ContestDetail";
 
-
 function Admin(props){
     const {path, url} = useRouteMatch()
-    const {username} = useParams()
-    const [contests, setContests] = React.useState([]);
 
-    const history = useHistory();
     console.log('Url and path', url, path)
     return(
         <div className='admin'>
@@ -48,7 +44,7 @@ function ContestList(){
     useEffect(() => {
         axiosInstance.get('/contests', {
             params: {
-                author: user
+                author: user.id
             }
         }).then((r) => {
             setContests(r.data)
@@ -63,7 +59,7 @@ function ContestList(){
             dataIndex: 'name',
             key: 'name',
             render: (text, record) => (
-                <Link to={{pathname: `${url}/contests/${record.id}/` }}>
+                <Link to={{pathname: `${url}/contests/${record.id}` }}>
                     {text}
                 </Link>
             )

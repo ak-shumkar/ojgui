@@ -53,7 +53,7 @@ class Contest extends React.Component {
 
             },
             {
-                title: 'Title',
+                title: 'Problem',
                 dataIndex: 'title',
                 key: 'name',
                 render: (text, record) => <Link to={`${url}/problem/${record.id}`}>{text}</Link>

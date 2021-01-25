@@ -4,14 +4,18 @@ import axios from 'axios'
 import '../css/contest.scss'
 
 import RegisterButton from "./RegisterButton";
+import ContestTime from "./ContestTime";
 
-import {Table} from 'antd'
+import  {  Statistic, Table  } from 'antd';
+
+const { Countdown } = Statistic;
 
 class Contests extends React.Component{
 
     state = {
         futureContests: [],
-        pastContests: []
+        pastContests: [],
+        runningContests: []
     }
 
     componentDidMount() {
@@ -38,6 +42,20 @@ class Contests extends React.Component{
             .then( response => {
                 console.log(response.data);
                 this.setState({futureContests: response.data});
+
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+
+        axios.get('http://127.0.0.1:8000/api/contests/',{
+            params: {
+                'phase': 'ongoing'
+            }
+        })
+            .then( response => {
+                console.log(response.data);
+                this.setState({runningContests: response.data});
 
             })
             .catch(function (error) {
@@ -71,6 +89,12 @@ class Contests extends React.Component{
                 key: 'level',
             },
             {
+                title: '',
+                dataIndex: '',
+                key: 'duration',
+                render: (record) => <ContestTime contest={record}/>
+            },
+            {
                 title: 'Register',
                 key: 'register',
                 dataIndex: 'id',
@@ -87,8 +111,20 @@ class Contests extends React.Component{
         for(let i=0; i<this.state.pastContests.length; i++){
             pastContests.push({...this.state.pastContests[i], key: i})
         }
+
+        let runningContests = []
+        for(let i=0; i<this.state.runningContests.length; i++){
+            runningContests.push({...this.state.runningContests[i], key: i})
+        }
         return (
             <div className="contests" >
+                <Table
+                    title={()=> <h5>Running Contests</h5>}
+                    bordered
+                    dataSource={runningContests}
+                    columns={columns.slice(0,-1)}
+                    pagination={{ pageSize: 20 }}
+                />
                 <Table
                     title={()=> <h5>Future Contests</h5>}
                     bordered
@@ -100,7 +136,7 @@ class Contests extends React.Component{
                     title={()=> <h5>Past Contests</h5>}
                     bordered
                     dataSource={pastContests}
-                    columns={columns.slice(0, -1)}
+                    columns={columns.slice(0, -2)}
                     pagination={{ pageSize: 20 }}
                 />
             </div>

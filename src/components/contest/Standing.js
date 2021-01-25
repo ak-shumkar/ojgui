@@ -29,8 +29,8 @@ export default function Standing(){
         },
         {
             title: 'User',
-            dataIndex: 'user',
-            key: 'user',
+            dataIndex: 'username',
+            key: 'username',
             // render: (text, record) => (new Date()) > (new Date(record.start_time)) ? <Link to={`/contests/${record.id}/`}>{text}</Link> : text
 
         },
@@ -45,6 +45,9 @@ export default function Standing(){
             key: 'level',
         },
     ];
+    for(let i='A'; i<'N';i++){
+        columns.push({title: i, dataIndex: i, key: i})
+    }
 
     const ranking = []
     for(let i=0; i<rating.length; i++){
